@@ -24,7 +24,7 @@ This can be completed using the solder-splice and the wire-strippers.
 
 ## Libraries
 The following libraries must be installed. This can be through the Arduino IDE directly, or through the links provided.
-- [U8GLib](https://github.com/olikraus/u8glib) by Oli Kraus.
+- [U8glib](https://github.com/olikraus/u8glib) by Oli Kraus.
 
 ## Code
 The following code should be compiled and uploaded to the microcontroller VIA the Arduino IDE.
