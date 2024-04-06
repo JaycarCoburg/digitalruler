@@ -21,3 +21,47 @@ The wiring diagram is provided below:
 Please note that you may require a breadboard to connect more that 1 wire to the 5V pin on the arduino.
 You will also need to connect the bare-wires from the Distance Sensor to Dupont wires in order to connect to the Arduino.
 This can be completed using the solder-splice and the wire-strippers.
+
+## Libraries
+The following libraries must be installed. This can be through the Arduino IDE directly, or through the links provided.
+- [U8GLib](https://github.com/olikraus/u8glib) by Oli Kraus.
+
+## Code
+The following code should be compiled and uploaded to the microcontroller VIA the Arduino IDE.
+Make sure that when uploading, you select the correct board and the correct port.
+
+```cpp
+#include "U8glib.h"
+
+// Only use this if you're using an i2c OLED.
+//U8GLIB_SSD1306_128X64 u8g(U8G_I2C_OPT_NONE | U8G_I2C_OPT_DEV_0);
+
+// This is for SPI OLEDs
+U8GLIB_SH1106_128X64 u8g(13, 11, 10, 9); // SCK = 13, MOSI = 11, CS = 10, A0 = 9
+
+uint16_t dist = 0; //between 0 and 1023
+float refresh = 1000/60; //60 Hz
+
+void draw(void) {
+ // graphic commands to redraw the complete screen should be placed here
+ u8g.setFont(u8g_font_unifont);
+ //u8g.setFont(u8g_font_osb21);
+ u8g.drawStr( 0, 18, "Digital Ruler");
+ u8g.drawBox( 0, 50, dist >> 3 , 14 );
+
+}
+void setup(void) {
+ u8g.setColorIndex(1);
+}
+
+void loop(void) {
+  dist = analogRead(A3);
+ // picture loop
+ u8g.firstPage();
+ do {
+ draw();
+ } while( u8g.nextPage() );
+ 
+ delay(refresh);
+}
+```
